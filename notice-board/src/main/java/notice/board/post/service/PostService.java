@@ -25,6 +25,7 @@ public class PostService {
 
         Optional.ofNullable(post.getContent()).ifPresent(findPost ::setContent);
         Optional.ofNullable(post.getTitle()).ifPresent(findPost :: setTitle);
+        Optional.ofNullable(post.getSecretStatus()).ifPresent(findPost :: setSecretStatus);
 
         Post updatePost = postRepository.save(findPost);
         return updatePost;
@@ -32,16 +33,21 @@ public class PostService {
 
     public Post findPost(Long postId) {
         Post findedPost = searchPostById(postId);
+        //비밀글 거르기 (자기 아이디 + 공개글만) 권한 없는건 오류
         return findedPost;
     }
 
     public List<Post> findPosts() {
         List<Post> posts = postRepository.findAll();
+        //비밀글 거르기 (자기 아이디 + 공개글만) 권한 없는건 오류
         return posts;
     }
 
     public void deletePost(long postId) {
-        postRepository.deleteById(postId);
+        Post post = searchPostById(postId);
+        post.setQuestionStatus(Post.QuestionStatus.QUESTION_DELETE);
+
+        postRepository.save(post);
     }
 
     private Post searchPostById(Long postId) {

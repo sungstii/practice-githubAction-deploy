@@ -6,6 +6,8 @@ import notice.board.post.dto.PostPostDto;
 import notice.board.post.entity.Post;
 import org.mapstruct.Mapper;
 
+import java.util.Objects;
+
 @Mapper(componentModel = "spring")
 public interface PostMapper {
     default Post postPostToPost(PostPostDto postDto) {
@@ -16,6 +18,7 @@ public interface PostMapper {
         post.setMember(member);
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
+        post.setSecretStatus(postDto.getSecretStatus());
 
         return post;
     }

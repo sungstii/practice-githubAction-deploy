@@ -3,6 +3,7 @@ package notice.board.post.dto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import notice.board.member.entity.Member;
+import notice.board.post.entity.Post;
 
 
 @Getter
@@ -13,4 +14,5 @@ public class PostPatchDto {
     private Long memberId;
     private String title;
     private String content;
+    private Post.SecretStatus secretStatus;
 }
