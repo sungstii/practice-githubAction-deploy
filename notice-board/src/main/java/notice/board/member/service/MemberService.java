@@ -5,6 +5,7 @@ import notice.board.exception.BusinessLogicException;
 import notice.board.exception.ExceptionCode;
 import notice.board.member.entity.Member;
 import notice.board.member.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +15,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    @Value("${mail.address.admin}")
+    private String admin;
     //create
     public Member createMember(Member member) {
         //컨트롤러에서 멤버객체를 받고 레파지토리에서 저장한다.
+
+        if(member.getEmail().equals(admin)){
+            member.setAuthority(Member.Authority.ADMIN);
+        }
         Member createdMember = memberRepository.save(member);
         return createdMember;
     }

@@ -19,4 +19,19 @@ public class Member {
     private String name;
     private String password;
     private String phone;
+    @Enumerated(EnumType.STRING)
+    private Authority authority = Authority.CLIENT;
+
+    public enum Authority {
+        ADMIN(1,"관리자"),
+        CLIENT(2,"회원");
+
+        private int num;
+        private String authority;
+
+        Authority(int num, String authority) {
+            this.num = num;
+            this.authority = authority;
+        }
+    }
 }

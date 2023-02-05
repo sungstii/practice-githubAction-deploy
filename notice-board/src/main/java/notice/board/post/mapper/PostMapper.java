@@ -22,5 +22,16 @@ public interface PostMapper {
 
         return post;
     }
-    Post patchPostToPost(PostPatchDto patchDto);
+    default Post patchPostToPost(PostPatchDto patchDto) {
+        Post post = new Post();
+        Member member = new Member();
+        member.setMemberId(patchDto.getMemberId());
+
+        post.setMember(member);
+        post.setTitle(patchDto.getTitle());
+        post.setContent(patchDto.getContent());
+        post.setSecretStatus(patchDto.getSecretStatus());
+
+        return post;
+    }
 }
